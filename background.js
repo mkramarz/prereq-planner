@@ -1,7 +1,6 @@
 function get_reqs(doc) {
     let list = doc.getElementsByClassName("catalog-notes")[0];
     let bullets = list.getElementsByTagName("li");
-    const reqs = [[],[]] //First array for prereqs, second array for coreqs
 
     for (let bullet of bullets) {
         let text = bullet.childNodes[0].innerHTML
@@ -22,5 +21,13 @@ function parse_reqs(node) {
 }
 
 function parse_child(url) {
-
+    fetch(url)
+    .then((res) => res.text())
+    .then((text) => {
+        const doc = new DOMParser().parseFromString(text, 'text/html');
+        get_reqs(doc);
+    })
+    .catch((err) => {
+        console.log("Encountered an error: " + err);
+    });
 }
