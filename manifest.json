@@ -1,0 +1,17 @@
+{ "manifest_version": 3,
+    "name": "Prereq Planner",
+    "version": "1.0",
+    "action": {
+        "default_icon": {
+            "48": "icons/notebook_icon.png"
+        },
+      "default_title": "Click to view a popup",
+      "default_popup": "popup/popup.html"
+    },
+    "description": "A plain text description",
+    "icons": {},
+    "author": ["Anais Levi", "Maite Kramarz"],
+    "background": {
+      "service_worker": "popup/popup.js"
+    }
+  }
