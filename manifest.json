@@ -12,6 +12,6 @@
     "icons": {},
     "author": ["Anais Levi", "Maite Kramarz"],
     "background": {
-      "service_worker": "popup/popup.js"
+      "service_worker": "serviceWorker.js"
     }
   }
