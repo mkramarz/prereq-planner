@@ -11,7 +11,10 @@
     "description": "A plain text description",
     "icons": {},
     "author": ["Anais Levi", "Maite Kramarz"],
-    "background": {
-      "service_worker": "serviceWorker.js"
-    }
+    "content_scripts" : [
+        {
+            "matches": ["*://mcgill.ca/study/*/courses"],
+            "js": ["background.js"]
+        }
+    ]
   }
