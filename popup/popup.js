@@ -41,7 +41,7 @@ function populateList(course, parentList){
       {
         let subItem = document.createElement("li");
         if(item.getGroup()!=-1)
-          subItem.innerHTML= item.getName() + "<sup>" + item.getGroup() + "</sup>";
+          subItem.innerHTML = item.getName() + "<sup>" + item.getGroup() + "</sup>";
         else
           subItem.innerText = item.getName();
         subList.appendChild(subItem);
@@ -57,21 +57,17 @@ function populateList(course, parentList){
         else
         {
           let parentItem = document.createElement("li");
-          parentItem.innerText = item.getName()+" [Corequisite]";
+          if(item.getGroup()!=-1)
+            parentItem.innerHTML = item.getName() + " [Corequisite]<sup>" + item.getGroup() + "</sup>";
+          else
+            parentItem.innerText = item.getName() +" [Corequisite]";
           parentList.appendChild(parentItem);
         }
       })
     }
   }
-  //let coreqs = course.getCoreqs();
 }
 
-// function subList(course, parentList){
-//   let subItem = document.createElement("li");
-//   subItem.innerText = course.getName();
-//   parentList.appendChild(subItem);
-// }
-
 var test = populateList(new Course("COMP 251", 
-[new Course ("MATH 240", [new Course ("MATH 133", [],[], -1)],[], 1) , new Course ("MATH 235", [], [], 1)], 
-[new Course("COMP 206", [], [], -1)], -1), document.getElementById("list"));
+[new Course ("MATH 240", [new Course ("MATH 133", [],[], -1)],[], 2) , new Course ("MATH 235", [], [], 2)], 
+[new Course("COMP 206", [], [], 1)], 1), document.getElementById("list"));
