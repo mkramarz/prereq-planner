@@ -25,10 +25,10 @@ function populateList(course, parentList, isCoreq){
   }
   parentList.appendChild(item);
 
-  if (course.prereqs.length!=0){
-    let prereqs = course.prereqs; 
-    let subList = document.createElement("ul");
-    parentList.appendChild(subList);
+	if (course.prereqs.length!=0){
+		let prereqs = course.prereqs; 
+		let subList = document.createElement("ul");
+		parentList.appendChild(subList);
 
     prereqs.forEach((item)=>{
       if (item.prereqs.length!=0)
