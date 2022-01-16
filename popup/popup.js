@@ -19,8 +19,6 @@ class Course {
   }
 }
   
-let list = document.getElementById("list");
-
 function populateList(course, parentList){
   let item = document.createElement("li");
   if(course.getGroup()!=-1)
@@ -71,14 +69,3 @@ function populateList(course, parentList){
 var test = populateList(new Course("COMP 251", 
 [new Course ("MATH 240", [new Course ("MATH 133", [],[], -1)],[], 2) , new Course ("MATH 235", [], [], 2)], 
 [new Course("COMP 206", [], [], 1)], 1), document.getElementById("list"));
-
-document.onload(() => {
-    window.postMessage("fetch")
-})
-
-window.addEventListener("message", (event) => {
-    if (event.source != window) {
-        return;
-    }
-    //TODO: What to do when recieving the courses back
-})

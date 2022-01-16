@@ -1,26 +1,39 @@
-window.addEventListener("message", (event) => {
-    if (event.source != window) {
-        return;
+var port = chrome.runtime.connect();
+
+class Course {
+    constructor(name, prereqs, coreqs) {
+        this.name = name;
+        this.prereqs = prereqs;
+        this.coreqs = coreqs;
     }
-    if (event.data.text == "fetch") {
-        let classes = get_reqs(document);
-        window.postMessage(classes);
+    getPrereqs() {
+        return this.prereqs;
     }
-});
+    getCoreqs() {
+        return this.coreqs;
+    }
+    getName(){
+        return this.name;
+    }
+  }
+
+classes = get_reqs(document);
+console.log(classes)
 
 function get_reqs(doc) {
     let list = doc.getElementsByClassName("catalog-notes")[0];
     let bullets = list.getElementsByTagName("li");
-    let code = doc.getElementById("page-title").innerText.slice(0,8);
-    const prereqs = [];
-    const coreqs = [];
+    let code = doc.getElementById("page-title").innerText.trim().slice(0,8);
+    let prereqs = [];
+    let coreqs = [];
+    console.log("Found " + code);
 
     for (let bullet of bullets) {
         let text = bullet.childNodes[0].innerHTML
         if (text.includes("Prerequisite:") || text.includes("Prerequisites:") || text.includes("Prerequisite(s):")) {
             prereqs = parse_reqs(bullet.childNodes[0]);
         }
-        else if (text.includes("Coerequisite:") || text.includes("Prerequisites:") || text.includes("Prerequisite(s):")) {
+        else if (text.includes("Corequisite:") || text.includes("Corequisites:") || text.includes("Corequisite(s):")) {
             coreqs = parse_reqs(bullet.childNodes[0]);
         }
     }
@@ -29,9 +42,15 @@ function get_reqs(doc) {
 
 function parse_reqs(node) {
     let links = node.getElementsByTagName("a");
-    for (let link of links) {
-        parse_child(link.href)
+    let reqs = []
+    if (links.length == 0) {
+        console.log("No links to follow");
     }
+    for (let link of links) {
+        console.log("Following link to " + link.innerText);
+        reqs.push(parse_child(link.href));
+    }
+    return reqs
 }
 
 function parse_child(url) {
@@ -39,7 +58,7 @@ function parse_child(url) {
     .then((res) => res.text())
     .then((text) => {
         const doc = new DOMParser().parseFromString(text, 'text/html');
-        get_reqs(doc);
+        return get_reqs(doc);
     })
     .catch((err) => {
         console.log("Encountered an error: " + err);
