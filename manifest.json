@@ -13,7 +13,7 @@
     "author": ["Anais Levi", "Maite Kramarz"],
     "content_scripts" : [
         {
-            "matches": ["*://mcgill.ca/study/*/courses"],
+            "matches": ["*://www.mcgill.ca/study/*"],
             "js": ["background.js"]
         }
     ]
