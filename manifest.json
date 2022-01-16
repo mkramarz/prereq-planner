@@ -5,10 +5,10 @@
         "default_icon": {
             "48": "icons/notebook_icon.png"
         },
-      "default_title": "Click to view a popup",
+      "default_title": "Prereq Planner",
       "default_popup": "popup/popup.html"
     },
-    "description": "A plain text description",
+    "description": "Visualizes McGill University course pre- and co-requisites.",
     "icons": {},
     "author": ["Anais Levi", "Maite Kramarz"],
     "content_scripts" : [
