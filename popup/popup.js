@@ -31,19 +31,31 @@ function populateList(course, parentList, isCoreq){
 		parentList.appendChild(subList);
 
     prereqs.forEach((item)=>{
-      if (item.prereqs.length!=0)
-        populateList(item, subList, false)
+      let subItem = document.createElement("li");
+      if(item.group!=-1)
+        subItem.innerHTML = item.name + "<sup>" + item.group + "</sup>";
       else
-      {
-        let subItem = document.createElement("li");
-        if(item.group!=-1)
-          subItem.innerHTML = item.name + "<sup>" + item.group + "</sup>";
-        else
-          subItem.innerText = item.name;
-        subList.appendChild(subItem);
+        subItem.innerText = item.name;
+      subList.appendChild(subItem);
+
+      if (item.prereqs.length!=0){
+        let subList1 = document.createElement("ul");
+        subList.appendChild(subList1);
+        item.prereqs.forEach((item)=>{
+          populateList(item, subList1, false);
+        })
+      }
+      if (item.coreqs.length!=0){
+        let subList1 = document.createElement("ul");
+        subList.appendChild(subList1);
+        item.coreqs.forEach((item)=>{
+          populateList(item, subList1, true);
+        })
       }
     })
   }
+
+
   if (course.coreqs.length!=0){
     let coreqs = course.coreqs; 
     let subList = document.createElement("ul");
