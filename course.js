@@ -1,4 +1,4 @@
-export default class Course {
+export class Course {
     constructor(name, prereqs, coreqs, group) {
         this.name = name;
         this.prereqs = prereqs;
