@@ -8,17 +8,17 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
 
 
 function populateList(course, parentList, isCoreq){
-  let item = document.createElement("li");
-  if(!isCoreq)
+  let item = document.createElement("li"); // create new list item
+  if(!isCoreq) // check if the current course is a corequisite
   {    
-    if(course.group!=-1)
+    if(course.group!=-1) // check if course has an "OR"
       item.innerHTML= course.name + "<sup>" +course.group + "</sup>";
     else
       item.innerText = course.name;
   }
   else
   {
-    if(course.group!=-1)
+    if(course.group!=-1) // check if course has an "OR"
       item.innerHTML = course.name + " [Corequisite]<sup>" + course.group + "</sup>"; 
     else
       item.innerText = course.name + " [Corequisite]";
@@ -27,27 +27,32 @@ function populateList(course, parentList, isCoreq){
 
 	if (course.prereqs.length!=0){
 		let prereqs = course.prereqs; 
-		let subList = document.createElement("ul");
+		let subList = document.createElement("ul"); // create sublist (indent)
 		parentList.appendChild(subList);
 
+    // loop through each prerequisite
     prereqs.forEach((item)=>{
       let subItem = document.createElement("li");
-      if(item.group!=-1)
+      if(item.group!=-1) // check if course has an "OR"
         subItem.innerHTML = item.name + "<sup>" + item.group + "</sup>";
       else
         subItem.innerText = item.name;
       subList.appendChild(subItem);
 
+      // check if course has prerequisite(s)
       if (item.prereqs.length!=0){
         let subList1 = document.createElement("ul");
         subList.appendChild(subList1);
+        // add each prerequisite to the list recursively
         item.prereqs.forEach((item)=>{
           populateList(item, subList1, false);
         })
       }
+      // check if course has corequisite(s)
       if (item.coreqs.length!=0){
         let subList1 = document.createElement("ul");
         subList.appendChild(subList1);
+        // add each corequisite to the list recursively
         item.coreqs.forEach((item)=>{
           populateList(item, subList1, true);
         })
@@ -55,30 +60,34 @@ function populateList(course, parentList, isCoreq){
     })
   }
 
-
   if (course.coreqs.length!=0){
     let coreqs = course.coreqs; 
-    let subList = document.createElement("ul");
+    let subList = document.createElement("ul"); // create sublist (indent)
     parentList.appendChild(subList);
 
+    // loop through each corequisite
     coreqs.forEach((item)=>{
       let subItem = document.createElement("li");
-      if(item.group!=-1)
+      if(item.group!=-1) // check if course has an "OR"
         subItem.innerHTML = item.name + "[Corequisite]<sup>" + item.group + "</sup>";
       else
         subItem.innerText = item.name + " [Corequisite]";
       subList.appendChild(subItem);
 
+      // check if course has prerequisite(s)
       if (item.prereqs.length!=0){
         let subList1 = document.createElement("ul");
         subList.appendChild(subList1);
+        // add each prerequisite to the list recursively
         item.prereqs.forEach((item)=>{
           populateList(item, subList1, false);
         })
       }
+      // check if course has corequisite(s)
       if (item.coreqs.length!=0){
         let subList1 = document.createElement("ul");
         subList.appendChild(subList1);
+        // add each corequisite to the list recursively
         item.coreqs.forEach((item)=>{
           populateList(item, subList1, true);
         })
