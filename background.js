@@ -17,9 +17,15 @@ import('./course.js')
 
     async function getReqs(doc, group=-1) {
         // Reference variables
-        let list = doc.getElementsByClassName("catalog-notes")[0];
-        let bullets = list.getElementsByTagName("li");
         let code = doc.getElementById("page-title").innerText.trim().slice(0,8);
+        let list;
+        if (doc.getElementsByClassName("catalog-notes").length == 0) {
+            return new Module.Course(code, [], [], group); //If there's no catalog section, return empty course
+        }
+        else {
+            list = doc.getElementsByClassName("catalog-notes")[0];
+        } 
+        let bullets = list.getElementsByTagName("li");
         let prereqs = [];
         let coreqs = [];
 
