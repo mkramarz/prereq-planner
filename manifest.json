@@ -1,6 +1,6 @@
 { "manifest_version": 3,
     "name": "Prereq Planner",
-    "version": "1.0",
+    "version": "0.1.0",
     "action": {
         "default_icon": {
             "48": "icons/notebook_icon.png"
